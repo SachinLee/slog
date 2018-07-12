@@ -1,6 +1,6 @@
 var $,tab,dataStr,layer;
 layui.config({
-	base : "js/"
+	base : basePath + "js/"
 }).extend({
 	"bodyTab" : "bodyTab"
 })
@@ -11,12 +11,13 @@ layui.use(['bodyTab','form','element','layer','jquery'],function(){
     	layer = parent.layer === undefined ? layui.layer : top.layer;
 		tab = layui.bodyTab({
 			openTabNum : "50",  //最大可打开窗口数量
-			url : "json/navs.json" //获取菜单json地址
+			// url : "json/navs.json" //获取菜单json地址
+			url : basePath + "admin/menu/getMenuByKey/" //获取菜单json地址
 		});
 
 	//通过顶部菜单获取左侧二三级菜单   注：此处只做演示之用，实际开发中通过接口传参的方式获取导航数据
 	function getData(json){
-		$.getJSON(tab.tabConfig.url,function(data){
+		/*$.getJSON(tab.tabConfig.url,function(data){
 			if(json == "contentManagement"){
 				dataStr = data.contentManagement;
 				//重新渲染左侧菜单
@@ -33,6 +34,24 @@ layui.use(['bodyTab','form','element','layer','jquery'],function(){
                 dataStr = data.seraphApi;
                 //重新渲染左侧菜单
                 tab.render();
+            }
+		})*/
+		/*$.getJSON(tab.tabConfig.url + json, function (data) {
+			dataStr = data;
+			tab.render();
+        });*/
+		$.ajax({
+			url : tab.tabConfig.url + json,
+			type : 'GET',
+			success : function (data) {
+				dataStr = data.data;
+				tab.render();
+            },
+			error : function () {
+				layer.open({
+					title : '请求说明',
+					content : '系统异常'
+				})
             }
 		})
 	}

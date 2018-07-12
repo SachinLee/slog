@@ -7,6 +7,7 @@ import java.util.List;
 
 public interface MenuDao extends JpaRepository<Menu, String> {
 
-    List<Menu> findByKey(String key);
+    Menu findByKeyWord(String key);
 
+    List<Menu> findByPid(String pid);
 }

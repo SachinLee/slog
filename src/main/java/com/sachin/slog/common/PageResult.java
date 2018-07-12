@@ -22,6 +22,16 @@ public class PageResult<T> implements Serializable {
 
     public PageResult(){}
 
+    public PageResult(ResultEnum resultEnum, List<T> data) {
+        this.code = resultEnum.getCode();
+        this.msg = resultEnum.getMessage();
+        this.data = data;
+    }
+    public PageResult(ResultEnum resultEnum, int count, List<T> data) {
+        this(resultEnum, data);
+        this.count = count;
+    }
+
     public PageResult(int code, String msg, int count, List<T> data) {
         this.code = code;
         this.msg = msg;
