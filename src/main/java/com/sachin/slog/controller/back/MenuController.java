@@ -4,6 +4,7 @@ import com.sachin.slog.common.PageResult;
 import com.sachin.slog.common.ResultEnum;
 import com.sachin.slog.pojo.Menu;
 import com.sachin.slog.service.MenuService;
+import com.sachin.slog.utils.TreeNode;
 import com.sachin.slog.vo.MenuVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,4 +29,9 @@ public class MenuController {
         return new PageResult<>(ResultEnum.SUCCESS, menus);
     }
 
+    @GetMapping(value = "/getTree")
+    public PageResult<TreeNode> getTreeNode(String pid) {
+        List<TreeNode> treeNodes = menuService.findByPid(pid);
+        return new PageResult<>(ResultEnum.SUCCESS, treeNodes);
+    }
 }

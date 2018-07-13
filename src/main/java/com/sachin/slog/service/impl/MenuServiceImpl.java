@@ -1,11 +1,11 @@
 package com.sachin.slog.service.impl;
 
-import com.google.common.collect.Lists;
 import com.sachin.slog.common.base.BaseServiceImpl;
 import com.sachin.slog.dao.MenuDao;
 import com.sachin.slog.exception.SysException;
 import com.sachin.slog.pojo.Menu;
 import com.sachin.slog.service.MenuService;
+import com.sachin.slog.utils.TreeNode;
 import com.sachin.slog.vo.MenuVo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
@@ -13,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.CollectionUtils;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -36,18 +35,15 @@ public class MenuServiceImpl extends BaseServiceImpl<Menu, String> implements Me
         try {
             return this.getByKey(key);
         } catch (Exception e) {
-            log.error("获取菜单失败，失败原因:{}", e.getMessage());
+            log.error("获取菜单失败，失败原因:{}", e.getMessage(), e);
             throw new SysException(e.getMessage());
         }
     }
 
     private List<MenuVo> getByKey(String key) {
         MenuVo menuVo = new MenuVo();
-
         Menu menu = menuDao.findByKeyWord(key);
-
         this.getByPid(menu.getId(), menuVo);
-
         return menuVo.getChildren();
     }
 
@@ -66,4 +62,28 @@ public class MenuServiceImpl extends BaseServiceImpl<Menu, String> implements Me
         }
     }
 
+    @Override
+    public List<TreeNode> findByPid(String pid) {
+        try {
+            List<Menu> menuList = menuDao.findByPid(pid);
+            return this.menusToTreeNodes(menuList);
+        } catch (Exception e) {
+            log.error("获取菜单树失败，失败原因:{}", e.getMessage(), e);
+            e.printStackTrace();
+            throw new SysException(e.getMessage());
+        }
+    }
+
+    private TreeNode menuToTreeNode(Menu menu) {
+        TreeNode treeNode = new TreeNode();
+        treeNode.setId(menu.getId());
+        treeNode.setHref(menu.getHref());
+        treeNode.setPid(menu.getPid());
+        treeNode.setName(menu.getTitle());
+        return treeNode;
+    }
+    public List<TreeNode> menusToTreeNodes(List<Menu> menus) {
+        return menus.stream().map(m -> menuToTreeNode(m))
+                .collect(Collectors.toList());
+    }
 }
