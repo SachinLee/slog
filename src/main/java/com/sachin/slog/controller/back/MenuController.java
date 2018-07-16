@@ -13,6 +13,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+/**
+ * 菜单管理 控制层
+ */
 @RestController
 @RequestMapping("/admin/menu")
 public class MenuController {
@@ -20,6 +23,11 @@ public class MenuController {
     @Autowired
     private MenuService menuService;
 
+    /**
+     * 首页查询菜单
+     * @param key 相关的关键字内容
+     * @return
+     */
     @GetMapping(value = "/getMenuByKey/{key}")
     public PageResult<MenuVo> getMenuByKey(@PathVariable String key) {
 

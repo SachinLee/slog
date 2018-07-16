@@ -12,9 +12,21 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping("/admin")
 public class MainController {
 
+    /**
+     * 主页面
+     * @return 返回这页面html
+     */
     @GetMapping(value = {"/", "/index"})
-    public ModelAndView main() {
+    public ModelAndView index() {
         return new ModelAndView("index");
     }
 
+    /**
+     * 主页面的首页内容
+     * @return
+     */
+    @GetMapping(value = "/main")
+    public ModelAndView main() {
+        return new ModelAndView("page/main");
+    }
 }

@@ -2,8 +2,10 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	  xmlns:th="http://www.thymeleaf.org"
 	  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-<head th:replace="fragments/header :: common_header(~{::title}, _)">
+<head th:replace="fragments/header :: common_header(~{::title}, ~{::link}, ~{::meta})">
 	<title>后台管理</title>
+	<meta http-equiv="Access-Control-Allow-Origin" content="*">
+	<link rel="stylesheet" href="css/index.css" th:href="@{/css/index.css}" media="all" />
 </head>
 <body class="main_body">
 	<div class="layui-layout layui-layout-admin">
@@ -102,7 +104,7 @@
 				</ul>
 				<div class="layui-tab-content clildFrame">
 					<div class="layui-tab-item layui-show">
-						<iframe src="page/main.html"></iframe>
+						<iframe src="page/main.html" th:src="@{/admin/main}"></iframe>
 					</div>
 				</div>
 			</div>

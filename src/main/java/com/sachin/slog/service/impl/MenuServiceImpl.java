@@ -18,6 +18,9 @@ import org.springframework.util.CollectionUtils;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * 菜单service实现类
+ */
 @Slf4j
 @Service
 @Transactional
@@ -41,6 +44,11 @@ public class MenuServiceImpl extends BaseServiceImpl<Menu, String> implements Me
         }
     }
 
+    /**
+     * 通过关键字获取菜单列表
+     * @param key
+     * @return
+     */
     private List<MenuVo> getByKey(String key) {
         MenuVo menuVo = new MenuVo();
 
@@ -51,6 +59,11 @@ public class MenuServiceImpl extends BaseServiceImpl<Menu, String> implements Me
         return menuVo.getChildren();
     }
 
+    /**
+     * 递归查询菜单列表
+     * @param pid 菜单父ID
+     * @param menuVo 菜单信息
+     */
     private void getByPid(String pid, MenuVo menuVo) {
         List<Menu> menus = menuDao.findByPid(pid);
         List<MenuVo> menuVos = menus.parallelStream().map(m -> {
