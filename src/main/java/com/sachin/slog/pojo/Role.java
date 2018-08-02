@@ -2,6 +2,7 @@ package com.sachin.slog.pojo;
 
 import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
+import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -16,7 +17,7 @@ import java.io.Serializable;
 @Data
 @Entity
 @Table(name = "role")
-public class Role implements Serializable {
+public class Role implements GrantedAuthority {
 
     @Id
     @GeneratedValue(generator = "uuid")
@@ -31,4 +32,9 @@ public class Role implements Serializable {
     @NotNull(message = "角色名称不能为空")
     @Column(name = "name", length = 100)
     private String name;
+
+    @Override
+    public String getAuthority() {
+        return roleNo;
+    }
 }

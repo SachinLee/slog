@@ -1,7 +1,10 @@
 
-layui.use('jquery', function (exports) {
+layui.extend({
+    zTree : '{/}'+ basePath + 'ztree/jquery.ztree.all.min'
+}).use(['jquery', 'zTree'], function (exports) {
 
-    var $ = layui.$;
+    var $ = layui.$,
+        zTree = layui.zTree;
     var tree;
 
     var setting = {

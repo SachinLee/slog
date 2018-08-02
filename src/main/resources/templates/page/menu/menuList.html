@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="fragments/header :: common_header(~{::title}, ~{::link}, _)">
+    <title>菜单管理</title>
+    <link rel="stylesheet" href="css/index.css" th:href="@{/ztree/css/zTreeStyle/zTreeStyle.css}" media="all" />
+</head>
+<body>
+
+    <div id="menuTree"></div>
+
+    <script type="text/javascript" src="../../layui/layui.js" th:src="@{/layui/layui.js}"></script>
+    <script type="text/javascript" src="" th:src="@{/js/myTree/menuTree.js}"></script>
+</body>
+</html>
